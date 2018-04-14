@@ -1,5 +1,12 @@
 function [TrainingTime, TestingTime, trmeasurements, temeasurements, mse] = HessELMopt(TrainingData_File, TestingData_File, Elm_Type, NumberofHiddenNeurons, ActivationFunction, onset, offset)
 
+
+% Cao et. al [1] introduced implementation of in ELM with SVD method, 
+% implementation of in ELM with hessenbergdecomposition method was introduced with this code (lines 122-157).
+
+% [1] J. Cao, K. Zhang, M. Luo, C. Yin, and X. Lai, “Extreme learning machine and adaptive sparse representation for image classification,” Neural networks, vol. 81, pp. 91–102, 2016
+% Apdullah Yayık, 2018 
+
 REGRESSION=0;
 CLASSIFIER=1;
 
