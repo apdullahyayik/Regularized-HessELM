@@ -5,6 +5,7 @@ function [TrainingTime, TestingTime, trmeasurements, temeasurements, mse] = Hess
 % implementation of in ELM with hessenbergdecomposition method was introduced with this code (lines 122-157).
 
 % [1] J. Cao, K. Zhang, M. Luo, C. Yin, and X. Lai, “Extreme learning machine and adaptive sparse representation for image classification,” Neural networks, vol. 81, pp. 91–102, 2016
+% This function requies MSE.m and Perfcal.m
 % Apdullah Yayık, 2018 
 
 REGRESSION=0;
