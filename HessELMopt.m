@@ -4,9 +4,14 @@ function [TrainingTime, TestingTime, trmeasurements, temeasurements, mse] = Hess
 % Cao et. al [1] introduced implementation of in ELM with SVD method, 
 % implementation of in ELM with hessenbergdecomposition method was introduced with this code (lines 122-157).
 
-% [1] J. Cao, K. Zhang, M. Luo, C. Yin, and X. Lai, “Extreme learning machine and adaptive sparse representation for image classification,” Neural networks, vol. 81, pp. 91–102, 2016
+% [1] J. Cao, K. Zhang, M. Luo, C. Yin, and X. Lai, "Extreme learning machine and adaptive sparse representation for image classification", Neural networks, vol. 81, pp. 91102, 2016
 % This function requies MSE.m and Perfcal.m
-% Apdullah Yayık, 2018 
+
+
+% please kindly refer 
+% https://arxiv.org/abs/1907.05888 "Regularized HessELM and Inclined Entropy Measurement for 
+% Congestive Heart Failure Prediction"
+
 
 REGRESSION=0;
 CLASSIFIER=1;
@@ -130,9 +135,10 @@ for cnum=1:length(lcandidate)
     OutputWeight_C{1,cnum}=zeros(NumberofHiddenNeurons, 2);
 end
 lamda=zeros(1,length(lcandidate));
+H=H';
 for ii=1:length(lcandidate)
     ii
-    H=H';
+    
     if ii==offset
         lamda(ii)=0;
     else
@@ -140,12 +146,11 @@ for ii=1:length(lcandidate)
     end
     %     [U, D, V]=svd(H);
     %     invsvdopt=(inv(V*D'*U'*U*D*V'+lamda(ii)*eye(size(H'*H,1))))*H'; % H*invsvdopt;
-    
+    % P=Q, U=A in alg 1 of paper
     [P, A]=hess(H*H');
       invhessopt=H'*P*inv(A+lamda(ii)*eye(size(A,1)))*P';
 %     invhessopt=H'*P*((A\P')+(lamda(ii)*eye(size(A,1))));
 %     invhessopt=H'*(((A*P')+(lamda(ii)*eye(size(A,1))))\P'); % fastest one 
-    
 
     OutputWeight_C{1,ii}=invhessopt*T';
     y=(H*OutputWeight_C{1,ii})';
@@ -268,7 +273,7 @@ end
             teconfusionMatrix(2,2)=0;
         end
         
-        temeasurements(ii,:)=perfCal(teconfusionMatrix)
+        temeasurements=perfCal(teconfusionMatrix);
         
         
     end
